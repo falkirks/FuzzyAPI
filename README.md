@@ -1,6 +1,6 @@
 Fuzzy
 =====
-###### Making PocketMine-MP huggable 
+###### Making PocketMine-MP huggable
 
 Fuzzy is multi-purpose life saving tool for PocketMine-MP. It increases huggability by a factor of 10, guaranteed. 
 
@@ -8,6 +8,8 @@ Fuzzy is multi-purpose life saving tool for PocketMine-MP. It increases huggabil
 Fuzzy is a PocketMine plugin library to make doing stuff easier. Fuzzy wraps around the PocketMine server and enhances plugin development. Fuzzy includes many standard methods and classes along with a powerful intermediary event system.
 
 ### How do I setup Fuzzy?
+**Warning!** Although cuddly, Fuzzy is extremely invasive. Make sure you understand what you are doing when enabling this plugin.
+
 To activate Fuzzy for your plugin just add the following line to your `plugin.yml`
 ```yaml
 depend: ["FuzzyAPI"]
@@ -24,8 +26,16 @@ $this->getFuzzy()->sendFuzz(); // Prints "Fuzzy ❤  PluginName" to console
 $this->getFuzzy()->getPlayers(); // Returns a list of online players
 ```
 
+### What is a fuzzied class? How do they work?
+Fuzzy likes to hug things. When a class is fuzzied it means that Fuzzy is encapsulating the original object and providing extra functionality. Fuzzied objects are **not** entirely compatible with the object they are encapsulating, the notable example is
 
+```php
+$p = $this->getFuzzy()->getPlayer("Bob"); // Returns "FuzziedPlayer"
+var_dump(($p instanceof Player)); // Prints "false"
+var_dump(($p->unfuzz() instanceof Player)); // Prints "true" 
+```
 
+Fuzzied classes are generated when interacting with the server through the `FuzzyAPI` class. They can also be automatically injected into events passed to your plugin (this is opt-in). If you want to manually fuzz something you can use `$this->getFuzzy()->fuzz($object)`.
 
 
 
