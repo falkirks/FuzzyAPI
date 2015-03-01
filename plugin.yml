@@ -1,0 +1,5 @@
+name: FuzzyAPI
+author: Falkirks
+version: 0.1
+api: [1.11.0]
+main: fuzzy\Fuzzy
