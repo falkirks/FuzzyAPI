@@ -37,5 +37,13 @@ var_dump(($p->unfuzz() instanceof Player)); // Prints "true"
 
 Fuzzied classes are generated when interacting with the server through the `FuzzyAPI` class. They can also be automatically injected into events passed to your plugin (this is opt-in). If you want to manually fuzz something you can use `$this->getFuzzy()->fuzz($object)`.
 
+### What can I do with Fuzzy?
+Not much right now, but features ar in the works. Nevertheless, you can still do some cool stuff
+
+```php
+$p = $this->getFuzzy()->getPlayer("GrieferTheGriefer");
+$p->repeat(5)->until((20/5) * 28)->sendMessage("You are a griefer, nobody likes you, we will kick you soon.");
+$p->delay(30 * 20)->kick();
+```
 
 
