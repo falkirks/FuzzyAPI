@@ -4,6 +4,7 @@ namespace fuzzy;
 
 use fuzzy\event\fuzzy\FuzzyReadyEvent;
 use fuzzy\event\FuzzyEvent;
+use fuzzy\fuzzied\FuzziedClass;
 use fuzzy\fuzzied\FuzziedClassPool;
 use fuzzy\utils\FuzzyCommandSender;
 use pocketmine\command\ConsoleCommandSender;
@@ -40,7 +41,6 @@ class FuzzyAPI implements EventExecutor{
     public function init(){
         $this->plugin->setEnabled(true);
         if($this->plugin instanceof Listener){
-            $this->server->getPluginManager()->registerEvents($this->plugin, $this->plugin);
             $reflection = new \ReflectionClass($this->plugin);
             foreach($reflection->getMethods(\ReflectionMethod::IS_PUBLIC) as $method){
                 $parameters = $method->getParameters();
@@ -138,6 +138,12 @@ class FuzzyAPI implements EventExecutor{
     }
     public function fuzz($object){
         return FuzziedClassPool::getFuzzied($object);
+    }
+    public function unfuzz($object){
+        if($object instanceof FuzziedClass){
+            return $object->unfuzz();
+        }
+        return $object;
     }
     public function __get($name){
         // TODO: Implement __get() method.

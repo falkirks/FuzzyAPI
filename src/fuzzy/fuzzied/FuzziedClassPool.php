@@ -5,10 +5,10 @@ namespace fuzzy\fuzzied;
 use pocketmine\Player;
 
 class FuzziedClassPool {
-    private static $packetPool = [];
+    private static $classPool = [];
 
     private static function registerClass($class, $fuzzy){
-        FuzziedClassPool::$packetPool[$class] = $fuzzy;
+        FuzziedClassPool::$classPool[$class] = $fuzzy;
     }
     static public function getFuzzied($object){
         if(is_array($object)){
@@ -19,13 +19,13 @@ class FuzziedClassPool {
             return $out;
         }
         else {
-            if (empty(FuzziedClassPool::$packetPool)) FuzziedClassPool::registerClasses();
-            if (is_object($object) && isset(FuzziedClassPool::$packetPool[get_class($object)])) {
-                $class = FuzziedClassPool::$packetPool[$object];
+            if (empty(FuzziedClassPool::$classPool)) FuzziedClassPool::registerClasses();
+            if (is_object($object) && isset(FuzziedClassPool::$classPool[get_class($object)])) {
+                $class = FuzziedClassPool::$classPool[get_class($object)];
                 return new $class($object);
             }
 
-            return $object;
+            return (is_object($object) ? new FuzziedClass($object) : $object);
         }
     }
     private static function registerClasses(){

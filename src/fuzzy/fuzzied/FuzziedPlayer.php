@@ -3,6 +3,7 @@ namespace fuzzy\fuzzied;
 
 
 use pocketmine\Player;
+use pocketmine\scheduler\CallbackTask;
 
 class FuzziedPlayer extends FuzziedClass{
     /** @var  Player */
@@ -11,6 +12,6 @@ class FuzziedPlayer extends FuzziedClass{
         parent::__construct($player);
     }
     public function sayHello(){
-        $this->object->sendMessage("Hello " . $this->object->getName());
+        $this->__call("sendMessage", ["Hello " . $this->object->getName()]);
     }
 }
