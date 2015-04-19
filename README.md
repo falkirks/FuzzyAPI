@@ -37,6 +37,19 @@ var_dump(($p->unfuzz() instanceof Player)); // Prints "true"
 
 Fuzzied classes are generated when interacting with the server through the `FuzzyAPI` class. They can also be automatically injected into events passed to your plugin (this is opt-in). If you want to manually fuzz something you can use `$this->getFuzzy()->fuzz($object)`.
 
+### What about this "event system"?
+Fuzzy expose a smart event system with a JS like syntax. Fuzzied classes which extend `FuzziedEmitter` can emit events. Here is an example where I listen to all player chat messages
+```
+$this->getFuzzy()->on("player.chat", function(PlayerChatEvent $event){
+
+});
+```
+But it gets more powerful, I can listen to the next chat message of a specific player
+```
+$this->getFuzzy()->getPlayer("bob")->once("chat", function(PlayerChatEvent $event){
+    
+});
+```
 ### What can I do with Fuzzy?
 Not much right now, but features are in the works. Nevertheless, you can still do some cool stuff
 
@@ -45,5 +58,6 @@ $p = $this->getFuzzy()->getPlayer("GrieferTheGriefer");
 $p->repeat(5)->until((20/5) * 28)->sendMessage("You are a griefer, nobody likes you, we will kick you soon.");
 $p->delay(30 * 20)->kick();
 ```
-
+### Can I submit Fuzzy plugins to the repository?
+You can try. Fuzzy is hacky in nature and doesn't expose efficient ways to do things. 
 
