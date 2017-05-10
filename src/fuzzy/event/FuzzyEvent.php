@@ -2,6 +2,7 @@
 namespace fuzzy\event;
 
 
+
 use pocketmine\event\Event;
 
 class FuzzyEvent extends Event{

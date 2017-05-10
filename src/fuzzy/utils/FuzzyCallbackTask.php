@@ -2,15 +2,21 @@
 namespace fuzzy\utils;
 
 
-use pocketmine\scheduler\CallbackTask;
+use pocketmine\plugin\Plugin;
+use pocketmine\scheduler\PluginTask;
 use pocketmine\Server;
 
-class FuzzyCallbackTask extends CallbackTask{
+class FuzzyCallbackTask extends PluginTask {
     private $runs = 0;
+    /** @var  callable */
+    private $callable;
+    private $args;
 
-    public function __construct(callable $callable, array $args = [], $times = -1){
-        parent::__construct($callable, $args);
+    public function __construct(Plugin $plugin, callable $callable, array $args = [], $times = -1){
+        parent::__construct($plugin);
         $this->runs = $times;
+        $this->callable = $callable;
+        $this->args = $args;
     }
 
     public function onRun($currentTicks){
@@ -18,6 +24,7 @@ class FuzzyCallbackTask extends CallbackTask{
             Server::getInstance()->getScheduler()->cancelTask($this->getTaskId());
         }
         $this->runs--;
-        parent::onRun($currentTicks);
+        $c = $this->callable;
+        $c(...$this->args);
     }
 }
