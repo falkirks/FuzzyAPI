@@ -1,3 +1,5 @@
+> This tool is primarily a joke and an a silly pleasure project. It is not intended for use on production servers.
+
 Fuzzy
 =====
 ###### Making PocketMine-MP huggable
